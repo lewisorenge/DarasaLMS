@@ -1,0 +1,128 @@
+<section class="main-content">
+  <h4>Student Requests</h4>
+  <div class="row mt-3">
+    <div class="col-4">
+      <div ngbDropdown #filterDropdown="ngbDropdown" class="d-inline-block" [autoClose]="'outside'">
+        <button class="btn btn-sm btn-secondary" id="filterRequests" ngbDropdownToggle>
+          <i-feather name="filter"></i-feather>
+          <span class="align-middle">
+            Filter
+          </span>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="filterRequests">
+          <ul class="list-group">
+            <li
+              class="list-group-item list-group-item-action pl-1 pr-1 d-flex justify-content-between align-items-center">
+              <button class="btn btn-xs btn-secondary rounded-0"
+                (click)="clearFilter(); $event.stopPropagation(); filterDropdown.close();">
+                Clear
+              </button>
+              <button class="btn btn-xs btn-primary rounded-0"
+                (click)="filterRequests(); $event.stopPropagation(); filterDropdown.close();">
+                Done
+              </button>
+            </li>
+            <li class="list-group-item list-group-item-action" ngbDropdownItem
+              *ngFor="let filter of filters; let i = index">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [(ngModel)]="filter.checked"
+                  id="filterCheck{{ i+1 }}" (change)="setFilterRequests(filter)" />
+                <label class="custom-control-label" for="filterCheck{{ i+1 }}">
+                  {{ arrayStringToTitleCase(filter | values) }}
+                </label>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="form-group float-right">
+        <div class="input-group input-group-merge">
+          <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText"
+            (keyup)="searchRequests()" />
+          <div class="input-group-append">
+            <button type="button" class="input-group-text">
+              <i-feather name="search"></i-feather>
+            </button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div *ngIf="requests.length <= 0 && !loadingRequests; else showRequests">
+        <p>
+          {{ searchText ? 'No search results found.' : 'No requests found as per your selected filters.'}}
+        </p>
+        <a [routerLink]="['/students']" (click)="filterRequests()" class="btn btn-sm btn-soft-info" *ngIf="!searchFound">Reset</a>
+      </div>
+      <ng-template #showRequests>
+        <table class="table table-striped align-items-center">
+          <thead>
+            <tr>
+              <th>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" [(ngModel)]="checkAll" id="checkAll"
+                    (change)="checkUncheckAll()" />
+                  <label class="custom-control-label" for="checkAll"></label>
+                </div>
+              </th>
+              <th>Student Name</th>
+              <th>Applied Course</th>
+              <th>Date Applied</th>
+              <th style="padding-left: 2.2rem;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let request of requests; let i = index;" [ngClass]="{
+              'animate__animated animate__fadeOut animate__slow': request?.removed,
+              'bg-primary': request?.removed && request?.action === 'pending',
+              'bg-success': request?.removed && request?.action === 'accepted',
+              'bg-danger': request?.removed && request?.action === 'declined'
+              }">
+              <td>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="check{{ i+1 }}"
+                    [(ngModel)]="request.selected" />
+                  <label class="custom-control-label" for="check{{ i+1 }}"></label>
+                </div>
+              </td>
+              <th>{{ request.student?.user?.first_name }} {{ request.student?.user?.last_name }}</th>
+              <td>{{ request?.course?.name }}</td>
+              <td>{{ request?.date_created | date:'medium' }}</td>
+              <td>
+                <div *ngIf="request?.status === 'pending'">
+                  <button type="button" class="btn btn-sm btn-soft-success"
+                    (click)="processRequest(request?.id, 'accepted')">Accept</button>
+                  <span class="mr-2 ml-2 align-middle">|</span>
+                  <button type="button" class="btn btn-sm btn-soft-danger"
+                    (click)="processRequest(request?.id, 'declined')">Decline</button>
+                </div>
+                <div *ngIf="request?.status === 'accepted'">
+                  <button type="button" class="btn btn-sm btn-soft-primary"
+                    (click)="processRequest(request?.id, 'pending')">Suspend</button>
+                  <span class="mr-2 ml-2 align-middle">|</span>
+                  <button type="button" class="btn btn-sm btn-soft-danger"
+                    (click)="processRequest(request?.id, 'declined')">Decline</button>
+                </div>
+                <div *ngIf="request?.status === 'declined'">
+                  <button type="button" class="btn btn-sm btn-soft-success"
+                    (click)="processRequest(request?.id, 'accepted')">Accept</button>
+                  <span class="mr-2 ml-2 align-middle">|</span>
+                  <button type="button" class="btn btn-sm btn-soft-primary"
+                    (click)="processRequest(request?.id, 'pending')">Suspend</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+            (pageChange)="filterRequests()">
+          </ngb-pagination>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</section>

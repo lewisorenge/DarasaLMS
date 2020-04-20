@@ -1,0 +1,122 @@
+<header>
+  <nav class="main-header navbar navbar-main navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler order-lg-2 ml-n3 ml-lg-0" type=button data-toggle=collapse
+        data-target=#navbar-main-collapse aria-controls="navbar-main-collapse" aria-expanded=false
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse navbar-collapse-overlay order-lg-3" id="navbar-main-collapse">
+        <div class="position-relative">
+          <button class="navbar-toggler" type=button data-toggle=collapse data-target=#navbar-main-collapse
+            aria-controls=navbar-main-collapse aria-expanded=false aria-label="Toggle navigation">
+            <i-feather name="x"></i-feather>
+          </button>
+        </div>
+
+        <div class="d-lg-none px-4">
+          <a class="nav-link" [routerLink]="['/']">
+            Darasa LMS
+          </a>
+          <ul class="navbar-nav ml-lg-auto mt-3 dropdown dropdown-animate" data-toggle="hover">
+            <li class="nav-item nav-item-spaced" *ngFor="let menuItem of menuItems">
+              <ng-container *ngIf="!menuItem?.submenu; else menuwithsubmenu">
+                <a [routerLink]="[menuItem.path]" routerLinkActive="active" class="nav-link">
+                  <div class="d-flex w-100 justify-content-start align-items-center">
+                    <span class="menu-icon mr-3">
+                      <i-feather name="{{menuItem?.icon}}"></i-feather>
+                    </span>
+                    <span>{{menuItem?.title}}</span>
+                  </div>
+                </a>
+              </ng-container>
+              <ng-template #menuwithsubmenu>
+                <a [routerLink]="[menuItem.path]" routerLinkActive="active" class="nav-link"
+                  (click)="toggleSubMenu(menuItem?.id)">
+                  <div class="d-flex w-100 justify-content-start align-items-center">
+                    <span class="menu-icon mr-3">
+                      <i-feather name="{{menuItem?.icon}}"></i-feather>
+                    </span>
+                    <span>{{menuItem?.title}}</span>
+                    <span class="ml-3">
+                      <i-feather name="{{ showSubmenu[menuItem?.id] ? 'chevron-up' : 'chevron-down' }}"></i-feather>
+                    </span>
+                  </div>
+                </a>
+              </ng-template>
+
+              <!-- Submenu content -->
+              <div class="submenu" [ngClass]="{'collapse': !showSubmenu[menuItem?.id]}">
+                <a href="#" class="nav-link" *ngFor="let subMenuItem of menuItem?.submenu">
+                  <span>{{ subMenuItem.title }}</span>
+                </a>
+              </div>
+
+            </li>
+          </ul>
+        </div>
+        <form [formGroup]="searcForm" class="omnisearch-form search-form ml-lg-auto d-flex align-items-center position-relative" *ngIf="showSearchbar">
+          <div class="form-group mb-0">
+              <div class="omnisearch-overlay position-fixed" (click)="closeSearchResults()" *ngIf="searchResult.length"></div>
+              <div class="input-group input-group-merge overflow-hiddenbg-white position-relative"
+                  >
+                  <input formControlName="search" type="text" class="form-control pl-2 pr-4 rounded" [class.show]="searchOpen" [class.border]="searchOpen"
+                          placeholder="Search course">
+                      <i-feather (click)="toggleSearch()" name="search"
+                      class="search-icon position-absolute d-flex bg-white rounded-right justify-content-center align-items-center">
+                    </i-feather>
+              </div>
+                <div class="omnisearch-suggestions w-100 position-absolute" *ngIf="searchResult.length">
+                  <div class="omnisearch-wrapper w-100 rounded border shadow-sm p-3 position-absolute bg-white">
+                    <h6 class="heading">Search Suggestions</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li *ngFor="let course of searchResult" class="search-item">
+                          <div class="list-link d-flex align-items-center" (click)="onCourseSelect($event)">
+                              <i-feather name="clock" class="d-flex align-items-center"></i-feather>
+                              <span>{{ course.name }}</span>
+                          </div>
+                        </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+        </form>
+        <ul class="navbar-nav align-items-lg-center d-none d-lg-flex ml-lg-auto">
+          <li class="nav-item">
+            <div class="order-lg-4 ml-lg-3">
+              <h6 class="m-0">{{profile.first_name}} {{profile.last_name}}</h6>
+              <p *ngIf="profile.role === 'student' && profile?.student" class="text-sm text-primary mb-0"
+                [ngClass]="{'m-0': !profile?.student?.educational_stage?.name}">
+                {{ profile?.student?.educational_stage?.name }}
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="order-lg-4 ml-lg-3">
+        <a class="nav-link nav-link-icon px-2" [routerLink]="[]" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <span class="avatar rounded-circle">
+            <img alt="" src="{{profile.picture}}">
+          </span>
+          <i-feather style="margin-left: 5px;" name="chevron-down"></i-feather>
+        </a>
+        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right dropdown-menu-arrow p-3">
+          <!-- <a [routerLink]="['/profile']" class="dropdown-item">
+            <i-feather name="user" class="dropdown-item-icon"></i-feather> <span>My profile</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a [routerLink]="['/settings']" class=dropdown-item>
+            <i-feather name="settings" class="dropdown-item-icon"></i-feather> <span>Settings</span>
+          </a> -->
+          <span (click)="handleLogOut()" class="dropdown-item" style="cursor: pointer;">
+            <span>
+              <i-feather name="log-out" class="dropdown-item-icon"></i-feather>
+            </span>
+            <span>Logout</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

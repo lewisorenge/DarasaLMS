@@ -1,0 +1,21 @@
+//
+// Custom forms
+//
+
+.custom-control-label {
+  line-height: 1.8;
+}
+
+.custom-checkbox .custom-control-label::before {
+  border-radius: 0.25rem;
+}
+
+.table {
+  .custom-checkbox {
+    padding-left: 0rem !important;
+    .custom-control-label::before,
+    .custom-control-label::after {
+      left: 0rem !important;
+    }
+  }
+}

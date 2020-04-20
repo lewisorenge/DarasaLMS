@@ -1,0 +1,94 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modalLabel">Add a Class</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="classForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label class="form-control-label">Name of the Class</label>
+      <input type="text" formControlName="name" class="form-control"
+        [ngClass]="{'is-invalid': submitted && f.name.invalid}">
+      <div *ngIf="submitted && f.name.invalid" class="form-text text-danger">
+        <span *ngIf="f.name.errors.required">Class name is required</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-control-label">Class description</label>
+      <textarea class="form-control" formControlName="description" rows="2"
+        [ngClass]="{'is-invalid': submitted && f.description.invalid}"></textarea>
+      <div *ngIf="submitted && f.description.invalid" class="form-text text-danger">
+        <span *ngIf="f.description.errors.required">Class description is required</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-control-label">Welcome message</label>
+      <input type="text" formControlName="welcome_message" class="form-control"
+        [ngClass]="{'is-invalid': submitted && f.welcome_message.invalid}">
+      <div *ngIf="submitted && f.welcome_message.invalid" class="form-text text-danger">
+        <span *ngIf="f.welcome_message.errors.required">Welcome message is required</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label class="form-control-label">Duration <span class="text-primary">(in minutes)</span> </label>
+          <input type="number" min="0" formControlName="duration" class="form-control"
+            [ngClass]="{'is-invalid': submitted && f.duration.invalid}">
+          <div *ngIf="submitted && f.duration.invalid" class="form-text text-danger">
+            <span *ngIf="f.duration.errors.required">Duration is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label class="form-control-label">Start date & time</label>
+          <input type="text" mwlFlatpickr class="form-control" formControlName="start_datetime" [altInput]="true"
+            [convertModelValue]="true" [enableTime]="true" [altFormat]="'F j, Y at G:i K'" [dateFormat]="'Z'"
+            placeholder="Select date and time" [minDate]="'today'" />
+          <div *ngIf="submitted && f.start_datetime.invalid" class="form-text text-danger">
+            <span *ngIf="f.start_datetime.errors.required">Start date & time is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label class="form-control-label">Repeat</label>
+          <select class="custom-select mb-3" formControlName="repeat">
+            <option value="YEARLY">Yearly</option>
+            <option value="MONTHLY">Monthly</option>
+            <option value="WEEKLY">Weekly</option>
+            <option value="DAILY">Daily</option>
+            <option value="HOURLY">Hourly</option>
+            <option value="MINUTELY">Minutely</option>
+            <option value="SECONDLY">Secondly</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label class="form-control-label">Repeat until</label>
+          <input type="text" mwlFlatpickr class="form-control" formControlName="repeat_until" [altInput]="true"
+            [convertModelValue]="true" [enableTime]="true" [altFormat]="'F j, Y at G:i K'" [dateFormat]="'Z'"
+            placeholder="Select date and time" [minDate]="'today'" />
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-control-label">Color <span class="text-primary">(select class color)</span></label>
+      <input type="hidden" formControlName="color" />
+      <div class="row p-2">
+        <div class="mr-2" (click)="onSelectColor(color?.hexColorCode)" *ngFor="let color of colors">
+          <span class="dot" [style.background-color]="color?.hexColorCode"
+            [ngClass]="{'icon icon-shape': selectedColor == color?.hexColorCode}">
+            <i-feather name="check" *ngIf="selectedColor == color?.hexColorCode"></i-feather>
+          </span>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3 mb-3 float-right">Save</button>
+  </form>
+</div>

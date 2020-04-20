@@ -1,0 +1,24 @@
+.cover-container {
+  max-height: 350px;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  img {
+    flex: 1;
+    object-fit: cover;
+  }
+}
+
+ol {
+  list-style: none;
+  counter-reset: item;
+  li {
+    counter-increment: item;
+    &:before {
+      margin-right: 10px;
+      content: counters(item, ".") " ";
+      display: inline-block;
+    }
+  }
+}

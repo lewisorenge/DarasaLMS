@@ -1,0 +1,24 @@
+<div class="row mt-2 mb-2">
+  <h5 class="col-md-5 text-left">My Courses</h5>
+  <div class="col-md-7 text-right">
+    <ng-container *ngIf="profile?.role === 'student'; else showAddNewCourseBtn">
+      <span class="mr-3" style="cursor: pointer;" [ngClass]="{'text-primary': filter === 'enrolled'}"
+        (click)="filterCourses('enrolled')">Enrolled</span>
+      <span style="cursor: pointer;" [ngClass]="{'text-primary': filter === 'recommended'}"
+        (click)="filterCourses('recommended')">Recommended</span>
+    </ng-container>
+    <ng-template #showAddNewCourseBtn>
+      <a [routerLink]="['/courses/add']" class="btn btn-soft-primary btn-sm">Add New Course</a>
+    </ng-template>
+  </div>
+</div>
+<div class="scrolling-wrapper row flex-row flex-nowrap">
+  <p class="col-12" *ngIf="courses?.length <= 0; else showCourses">
+    {{ filter === 'enrolled' ? 'You are not enrolled to any course.' : 'There are no matching courses' }}
+  </p>
+  <ng-template #showCourses>
+    <div style="margin: 0 10px;" *ngFor="let course of courses">
+      <app-course-card [course]="course"></app-course-card>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,12 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-2">
+      <h4>Today</h4>
+      <p>{{ todayDate | date:'fullDate' }}</p>
+      <app-classroom-widget></app-classroom-widget>
+    </div>
+    <div class="col-10">
+      <full-calendar [options]='calendarOptions'></full-calendar>
+    </div>
+  </div>
+</section>

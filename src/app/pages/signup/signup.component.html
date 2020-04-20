@@ -1,0 +1,319 @@
+<!-- Main content -->
+<section class="main-content" *ngIf="!successfulyRegistered">
+  <div class="container d-flex flex-column">
+      <div class="row align-items-center justify-content-center min-vh-100">
+          <div class="col-md-8 py-6 py-md-0">
+              <div class="row justify-content-center">
+                  <div class="card shadow zindex-100 mb-0">
+                      <div class="card-body px-md-5 py-5">
+                          <div class="mb-3 text-center">
+                              <h6 class="h3 text-primary">Darasa LMS</h6>
+                              <p class="text-muted mb-0">
+                                  Please create a your account before you to
+                                  continue.
+                              </p>
+                              <div class="underline bg-primary mx-auto mt-3"></div>
+                          </div>
+                          <span class="clearfix"></span>
+
+                          <!-- Tabs -->
+                          <ul class="nav nav-pills d-flex justify-content-center mt-4" id="myTab" role="tablist">
+                              <li class="nav-item">
+                                  <a
+                                      class="nav-link nav-link-blue active"
+                                      id="home-tab"
+                                      data-toggle="tab"
+                                      href="#student"
+                                      role="tab"
+                                      aria-controls="student"
+                                      aria-selected="true"
+                                      >I'm a Student</a
+                                  >
+                              </li>
+                              <li class="nav-item">
+                                  <a
+                                      class="nav-link nav-link-blue"
+                                      id="profile-tab"
+                                      data-toggle="tab"
+                                      href="#teacher"
+                                      role="tab"
+                                      aria-controls="teacher"
+                                      aria-selected="false"
+                                      >I'm a Teacher</a
+                                  >
+                              </li>
+                          </ul>
+                          <div class="tab-content" id="myTabContent">
+                              <div
+                                  class="tab-pane fade show active"
+                                  id="student"
+                                  role="tabpanel"
+                                  aria-labelledby="home-tab"
+                              >
+                                  <form
+                                      [formGroup]="studentForm"
+                                      (ngSubmit)="onStudentSubmit()"
+                                      class="mt-4"
+                                  >
+                                      <div class="row justify-content-center">
+                                          <div class="col-lg-6 mb-3">
+                                              <div class="form-group">
+                                                  <div class="position-relative w-100" >
+                                                      <div class="position-relative">
+                                                          <i-feather name="user" class="left-icon position-absolute"
+                                                          [ngClass]="{ 'text-danger': (studentSubmitted || getStudentControl('firstname').touched) && getStudentControl('firstname').invalid}"></i-feather>
+                                                          <input type="text" formControlName="firstname" class="form-control bg-white px-5 rounded-0" placeholder="First Name"
+                                                          [ngClass]="{ 'is-invalid': (studentSubmitted || getStudentControl('firstname').touched) && getStudentControl('firstname').invalid}">
+                                                      </div>
+                                                      <small *ngIf="(studentSubmitted || getStudentControl('firstname').touched) && getStudentControl('firstname').errors?.required" class="err-msg form-text text-danger position-absolute">
+                                                          First Name is required
+                                                      </small>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-6 mb-3">
+                                              <div class="form-group">
+                                                  <div class="position-relative w-100" >
+                                                      <div class="position-relative">
+                                                          <i-feather name="user" class="left-icon position-absolute"
+                                                          [ngClass]="{ 'text-danger': (studentSubmitted || getStudentControl('lastname').touched) && getStudentControl('lastname').invalid}"></i-feather>
+                                                          <input type="text" formControlName="lastname" class="form-control bg-white pl-5 rounded-0" placeholder="Second Name"
+                                                          [ngClass]="{ 'is-invalid': (studentSubmitted || getStudentControl('lastname').touched) && getStudentControl('lastname').invalid}">
+                                                      </div>
+                                                      <small *ngIf="(studentSubmitted || getStudentControl('lastname').touched) && getStudentControl('lastname').errors?.required" class="err-msg form-text text-danger position-absolute">
+                                                          Second Name is required
+                                                      </small>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="row justify-content-center">
+                                          <div class="col-lg-12 mb-3">
+                                              <div class=form-group>
+                                                  <div class="position-relative " >
+                                                    <div class="position-relative">
+                                                      <i-feather name="mail" class="left-icon position-absolute"
+                                                      [ngClass]="{ 'text-danger': (studentSubmitted || getStudentControl('email').touched) && getStudentControl('email').invalid}"></i-feather>
+                                                      <input type="email"formControlName="email" class="form-control bg-white pl-5 rounded-0" placeholder="Email"
+                                                      [ngClass]="{ 'is-invalid': (studentSubmitted || getStudentControl('email').touched) && getStudentControl('email').invalid}">
+                                                    </div>
+                                                    <small *ngIf="(studentSubmitted || getStudentControl('email').touched) && getStudentControl('email').errors?.required" class="err-msg form-text text-danger position-absolute">
+                                                      Email is required
+                                                    </small>
+                                                    <small *ngIf="(studentSubmitted || getStudentControl('email').touched) && getStudentControl('email').errors?.pattern" class="err-msg form-text text-danger position-absolute">
+                                                      Not an email format
+                                                    </small>
+                                                  </div>
+                                                </div>
+                                          </div>
+                                      </div>
+                                      <div class="row justify-content-center">
+                                          <div class="col-lg-6 mb-3">
+                                              <div class="form-group">
+                                                  <div class="position-relative w-100" >
+                                                      <div class="position-relative">
+                                                        <i-feather name="lock" class="left-icon position-absolute"
+                                                         [ngClass]="{ 'text-danger': (studentSubmitted || getStudentControl('password').touched) && getStudentControl('password').invalid}"></i-feather>
+                                                        <input [type]="studentPasswordVisible ? 'text' : 'password'" formControlName="password" class="form-control bg-white px-5 rounded-0" placeholder="Password"
+                                                         [ngClass]="{ 'is-invalid': (studentSubmitted || getStudentControl('password').touched) && getStudentControl('password').invalid}">
+                                                        <i-feather [name]="studentPasswordVisible ? 'eye' : 'eye-off'" class="right-icon position-absolute" (click)="changeStudentsPasswordStatus()"
+                                                         [ngClass]="{ 'text-danger': (studentSubmitted || getStudentControl('password').touched) && getStudentControl('password').invalid}"></i-feather>
+                                                      </div>
+                                                      <small *ngIf="(studentSubmitted || getStudentControl('password').touched) && getStudentControl('password').errors?.required" class="err-msg form-text text-danger position-absolute">
+                                                          Password is required
+                                                      </small>
+                                                    </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-6">
+                                              <div class="form-group">
+                                                  <div class="form-group">
+                                                      <div class="position-relative w-100" >
+                                                          <div class="position-relative">
+                                                            <i-feather name="lock" class="left-icon position-absolute"
+                                                            [ngClass]="{ 'text-danger': (studentSubmitted || getStudentControl('repeatPassword').touched) && !areStudentsPasswordsIdentic()}"></i-feather>
+                                                            <input [type]="studentRepeatPasswordVisible ? 'text' : 'password'" formControlName="repeatPassword" class="form-control bg-white px-5 rounded-0" placeholder="Repeat password"
+                                                            [ngClass]="{ 'is-invalid': (studentSubmitted || getStudentControl('repeatPassword').touched) && !areStudentsPasswordsIdentic()}">
+                                                            <i-feather [name]="studentRepeatPasswordVisible ? 'eye' : 'eye-off'" class="right-icon position-absolute" (click)="changeStudentsRepeatPasswordStatus()"
+                                                            [ngClass]="{ 'text-danger': (studentSubmitted || getStudentControl('repeatPassword').touched) && !areStudentsPasswordsIdentic()}"></i-feather>
+                                                          </div>
+                                                          <small *ngIf="(studentSubmitted || getStudentControl('repeatPassword').touched) && !areStudentsPasswordsIdentic()" class="err-msg form-text text-danger position-absolute">
+                                                              The passwords aren't identical
+                                                          </small>
+                                                        </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-12 d-flex justify-content-between align-items-center">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="exampleCheck1">
+                                            <label class="custom-control-label" for="exampleCheck1">
+                                                Accept <span class="text-primary">Terms of Use and Privacy</span>
+                                            </label>
+                                          </div>
+                                          <button type="submit" class="btn btn-primary" [disabled]="studentForm.invalid || !areStudentsPasswordsIdentic()">
+                                              Sign up
+                                          </button>
+                                      </div>
+                                  </form>
+                              </div>
+                              <div
+                                  class="tab-pane fade"
+                                  id="teacher"
+                                  role="tabpanel"
+                                  aria-labelledby="profile-tab"
+                              >
+                              <form
+                              [formGroup]="teacherForm"
+                              (ngSubmit)="onTeacherSubmit()"
+                              class="mt-4"
+                          >
+                              <div class="row justify-content-center">
+                                  <div class="col-lg-6 mb-3">
+                                      <div class="form-group">
+                                          <div class="position-relative w-100">
+                                              <div class="position-relative">
+                                                  <i-feather name="user" class="left-icon position-absolute"
+                                                  [ngClass]="{ 'text-danger': (teacherSubmitted || getTeacherControl('firstname').touched) && getTeacherControl('firstname').invalid}"></i-feather>
+                                                  <input type="text" formControlName="firstname" class="form-control bg-white px-5 rounded-0" placeholder="First Name"
+                                                  [ngClass]="{ 'is-invalid': (teacherSubmitted || getTeacherControl('firstname').touched) && getTeacherControl('firstname').invalid}">
+                                              </div>
+                                              <small *ngIf="(teacherSubmitted || getTeacherControl('firstname').touched) && getTeacherControl('firstname').errors?.required" class="err-msg form-text text-danger position-absolute">
+                                                  First Name is required
+                                              </small>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6 mb-3">
+                                      <div class="form-group">
+                                          <div class="position-relative w-100" >
+                                              <div class="position-relative">
+                                                  <i-feather name="user" class="left-icon position-absolute"
+                                                  [ngClass]="{ 'text-danger': (teacherSubmitted || getTeacherControl('lastname').touched) && getTeacherControl('lastname').invalid}"></i-feather>
+                                                  <input type="text" formControlName="lastname" class="form-control bg-white pl-5 rounded-0" placeholder="Second Name"
+                                                  [ngClass]="{ 'is-invalid': (teacherSubmitted || getTeacherControl('lastname').touched) && getTeacherControl('lastname').invalid}">
+                                              </div>
+                                              <small *ngIf="(teacherSubmitted || getTeacherControl('lastname').touched) && getTeacherControl('lastname').errors?.required" class="err-msg form-text text-danger position-absolute">
+                                                  Second Name is required
+                                              </small>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <div class="col-lg-12 mb-3">
+                                      <div class=form-group>
+                                          <div class="position-relative " >
+                                            <div class="position-relative">
+                                              <i-feather name="mail" class="left-icon position-absolute"
+                                              [ngClass]="{ 'text-danger': (teacherSubmitted || getTeacherControl('email').touched) && getTeacherControl('email').invalid}"></i-feather>
+                                              <input type="email" formControlName="email" class="form-control bg-white pl-5 rounded-0" placeholder="Email"
+                                              [ngClass]="{ 'is-invalid': (teacherSubmitted || getTeacherControl('email').touched) && getTeacherControl('email').invalid}">
+                                            </div>
+                                            <small *ngIf="(teacherSubmitted || getTeacherControl('email').touched) && getTeacherControl('email').errors?.required" class="err-msg form-text text-danger position-absolute">
+                                              Email is required
+                                            </small>
+                                            <small *ngIf="(teacherSubmitted || getTeacherControl('email').touched) && getTeacherControl('email').errors?.pattern" class="err-msg form-text text-danger position-absolute">
+                                              Not an email format
+                                            </small>
+                                          </div>
+                                        </div>
+                                  </div>
+                              </div>
+                              <div class="row justify-content-center">
+                                  <div class="col-lg-6 mb-3">
+                                      <div class="form-group">
+                                          <div class="position-relative w-100" >
+                                              <div class="position-relative">
+                                                <i-feather name="lock" class="left-icon position-absolute"
+                                                 [ngClass]="{ 'text-danger': (teacherSubmitted || getTeacherControl('password').touched) && getTeacherControl('password').invalid}"></i-feather>
+                                                <input [type]="teacherPasswordVisible ? 'text' : 'password'" formControlName="password" class="form-control bg-white px-5 rounded-0" placeholder="Password"
+                                                 [ngClass]="{ 'is-invalid': (teacherSubmitted || getTeacherControl('password').touched) && getTeacherControl('password').invalid}">
+                                                <i-feather [name]="teacherPasswordVisible ? 'eye' : 'eye-off'" class="right-icon position-absolute" (click)="changeTeacherPasswordStatus()"
+                                                 [ngClass]="{ 'text-danger': (teacherSubmitted || getTeacherControl('password').touched) && getTeacherControl('password').invalid}"></i-feather>
+                                              </div>
+                                              <small *ngIf="(teacherSubmitted || getTeacherControl('password').touched) && getTeacherControl('password').errors?.required" class="err-msg form-text text-danger position-absolute">
+                                                  Password is required
+                                              </small>
+                                            </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6 mb-3">
+                                          <div class="form-group">
+                                              <div class="position-relative w-100" >
+                                                  <div class="position-relative">
+                                                    <i-feather name="lock" class="left-icon position-absolute"
+                                                    [ngClass]="{ 'text-danger': (teacherSubmitted || getTeacherControl('repeatPassword').touched) && !areTeacherPasswordsIdentic()}"></i-feather>
+                                                    <input [type]="teacherRepeatPasswordVisible ? 'text' : 'password'" formControlName="repeatPassword" class="form-control bg-white px-5 rounded-0" placeholder="Repeat password"
+                                                    [ngClass]="{ 'is-invalid': (teacherSubmitted || getTeacherControl('repeatPassword').touched) && !areTeacherPasswordsIdentic()}">
+                                                    <i-feather [name]="teacherRepeatPasswordVisible ? 'eye' : 'eye-off'" class="right-icon position-absolute" (click)="changeTeacherRepeatPasswordStatus()"
+                                                    [ngClass]="{ 'text-danger': (teacherSubmitted || getTeacherControl('repeatPassword').touched) && !areTeacherPasswordsIdentic()}"></i-feather>
+                                                  </div>
+                                                  <small *ngIf="(teacherSubmitted || getTeacherControl('repeatPassword').touched) && !areTeacherPasswordsIdentic()" class="err-msg form-text text-danger position-absolute">
+                                                      The passwords aren't identical
+                                                  </small>
+                                                </div>
+                                          </div>
+                                  </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-12 mb-3">
+                                        <div class=form-group>
+                                            <div class="position-relative " >
+                                                <label class="form-control-label">What's your title</label>
+                                                <select class="form-control mb-3" formControlName="title">
+                                                  <option value="MR">Mr</option>
+                                                  <option value="MRS">Mrs</option>
+                                                  <option value="PROF">Prof</option>
+                                                  <option value="DR">Dr</option>
+                                                </select>
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
+                                  <div class="row no-gutters">
+                                      <div class="col-12 mb-4">
+                                        <div class=form-group>
+                                            <label class="form-control-label">Upload Teacher Certification</label>
+                                          <div class="position-relative">
+                                              <input type="file" formControlName="certificate" (click)="onCertificateTouch()" id="file-1" class="custom-input-file" data-multiple-caption="{count} files selected"/>
+                                              <label for="file-1" class="form-control"  (click)="onCertificateTouch()">
+                                                <i-feather name="upload"></i-feather>
+                                                  <span>Upload Teacher Certificate</span>
+                                              </label>
+                                              <small *ngIf="(teacherSubmitted || certificateTouched) && getTeacherControl('certificate').errors?.required" class="err-msg form-text text-danger position-absolute">
+                                                  Upload the certificate please
+                                              </small>
+                                          </div>
+                                         </div>
+                                      </div>
+                                      <div class="col-12 d-flex justify-content-between align-items-center">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="exampleCheck2">
+                                            <label class="custom-control-label" for="exampleCheck2">
+                                                Accept <span class="text-primary">Terms of Use and Privacy</span>
+                                            </label>
+                                          </div>
+                                          <button type="submit" class="btn btn-primary text-right" [disabled]="teacherForm.invalid || !areTeacherPasswordsIdentic()">
+                                              Sign up
+                                          </button>
+                                      </div>
+                                  </div>
+                          </form>
+                        </div>
+                        </div>
+                          <!-- Tabs End -->
+                      </div>
+                      <div class="position-absolute signin">
+                        Already have an account?
+                        <a [routerLink]="['/login']" class="font-weight-bold"> Sign In</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<app-alert-verification></app-alert-verification>
+

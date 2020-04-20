@@ -1,0 +1,30 @@
+<p *ngIf="occurrences?.length <= 0; else showClasses">
+  You have no classes today
+</p>
+<ng-template #showClasses>
+  <div class="card" style="min-width: 200px;" *ngFor="let occurrence of occurrences">
+    <div class="card-header pb-0">
+      <h6>{{ occurrence?.title }}</h6>
+    </div>
+    <div class="card-body pt-0">
+      <div class="d-flex">
+        <div>
+          <div class="mr-3">
+            <i-feather name="user"></i-feather>
+          </div>
+        </div>
+        <div>
+          <p class="text-heading mb-0">
+            {{ occurrence?.course?.teacher }}
+          </p>
+          <p class="text-sm text-muted mb-0">
+            Teacher
+          </p>
+        </div>
+      </div>
+      <div class="mt-2">
+        <app-students-avatar-group [students]="occurrence?.course?.students"></app-students-avatar-group>
+      </div>
+    </div>
+  </div>
+</ng-template>

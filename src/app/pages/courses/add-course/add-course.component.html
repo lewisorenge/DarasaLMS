@@ -1,0 +1,91 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-12">
+      <h4>Add New Course</h4>
+      <p>Hello {{ profile?.title ? profile?.title + '.' : '' }}
+        {{ profile.first_name | titlecase }}, please add a new course and then invite your students.</p>
+    </div>
+  </div>
+
+  <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-control-label">Course name</label>
+              <input type="text" formControlName="name" class="form-control"
+                [ngClass]="{'is-invalid': submitted && f.name.invalid}" />
+              <div *ngIf="submitted && f.name.invalid" class="form-text text-danger">
+                <span *ngIf="f.name.errors.required">Course name is required</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Course description</label>
+              <textarea class="form-control" formControlName="description" rows="3"
+                [ngClass]="{'is-invalid': submitted && f.description.invalid}"></textarea>
+              <div *ngIf="submitted && f.description.invalid" class="form-text text-danger">
+                Course description is required
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Educational stages</label>
+              <ng-select [items]="educationalStages" #selectEducationalStages bindLabel="name" dropdownPosition="auto"
+                bindValue="id" placeholder="Select educational stages" [virtualScroll]="true" [multiple]="true"
+                formControlName="educational_stages" [ngClass]="{'is-invalid': submitted && f.educational_stages.invalid}">
+                <ng-template ng-option-tmp let-item="item">
+                  <span>{{ item?.name }}</span>
+                </ng-template>
+              </ng-select>
+              <div *ngIf="submitted && f.educational_stages.invalid" class="form-text text-danger">
+                <span *ngIf="f.teacher.errors.required">At least one educational stage is required</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Classroom join mode</label>
+              <select class="custom-select mb-3" formControlName="classroom_join_mode">
+                <option selected value="join_all">Join all classrooms in this course
+                </option>
+                <option value="choose_to_join">Choose to join a classroom</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Teacher</label>
+              <ng-select [items]="teachers" #selectTeacher bindLabel="full_name" dropdownPosition="auto" bindValue="id"
+                placeholder="Select teacher" [virtualScroll]="true" formControlName="teacher"
+                [ngClass]="{'is-invalid': submitted && f.teacher.invalid}">
+                <ng-template ng-option-tmp let-item="item">
+                  <span>{{ item?.full_name }}</span>
+                </ng-template>
+              </ng-select>
+              <div *ngIf="submitted && f.teacher.invalid" class="form-text text-danger">
+                <span *ngIf="f.teacher.errors.required">Teacher is required</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Assistant teachers</label>
+              <ng-select [items]="teachers" #selectAssistantTeachers bindLabel="full_name" dropdownPosition="auto"
+                bindValue="id" placeholder="Select assistant teachers" [virtualScroll]="true" [multiple]="true"
+                formControlName="assistant_teachers">
+                <ng-template ng-option-tmp let-item="item">
+                  <span>{{ item?.full_name }}</span>
+                </ng-template>
+              </ng-select>
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Upload course image</label>
+              <div>
+                <input type="file" id="el-cover" (change)="fileChosen($event)" class="custom-input-file" accept="image/png, image/jpeg" />
+                <label for="el-cover" class="form-control" [ngClass]="{'is-invalid': submitted && f.cover.invalid}">
+                  <i-feather name="upload"></i-feather>
+                  <span>{{ this.courseForm.getRawValue()?.cover?.name || 'Choose a file…'}}</span>
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary ml-3 float-right">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,33 @@
+<ngb-carousel [showNavigationArrows]="showNavigationArrows" [interval]="interval"
+  style="width: 245px; outline: none; height: 213px;">
+  <ng-template ngbSlide *ngFor="let occurrence of occurrences">
+    <div class="card bg-purple" style="min-height: 213px;">
+      <div class="card-header text-white  pb-0">
+        <p class="text-sm">Today's Classes</p>
+        <p class="m-0">
+          {{ occurrence?.title }}
+        </p>
+        <p class="text-sm">
+          {{ occurrence.course.name }}
+        </p>
+      </div>
+      <div class="card-body text-white pt-0">
+        <div>
+          <div class="d-flex">
+            <div>
+              <div class="mr-3">
+                <i-feather name="calendar"></i-feather>
+              </div>
+            </div>
+            <div>
+              <p class="mb-0">{{ formatTime(occurrence.start) }} - {{ formatTime(occurrence.end) }}</p>
+              <p class="text-sm mb-0">
+                Start - End
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ngb-carousel>

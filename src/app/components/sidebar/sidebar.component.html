@@ -1,0 +1,64 @@
+<aside class="sidebar" [ngClass]="{'collapsed': showMenu, 'expanded': !showMenu}">
+  <div class="brand">
+    <div class="text">
+      <a [routerLink]="['/']">
+        Darasa LMS
+      </a>
+    </div>
+    <div class="logo">
+
+    </div>
+  </div>
+
+  <ul class="list-unstyled flex-column nav nav-pills nav-fill">
+    <li class="nav-item" *ngFor="let menuItem of menuItems">
+      <ng-container *ngIf="!menuItem?.submenu; else menuwithsubmenu">
+        <a [routerLink]="[menuItem.path]" routerLinkActive="active" class="nav-link"
+          [ngClass]="{'menu-collapsed': showMenu}">
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="mr-3">
+              <i-feather class="menu-icon" name="{{menuItem?.icon}}"></i-feather>
+            </span>
+            <span [ngClass]="{'d-none': showMenu}">{{menuItem?.title}}</span>
+          </div>
+        </a>
+      </ng-container>
+      <ng-template #menuwithsubmenu>
+        <a [routerLink]="[menuItem.path]" routerLinkActive="active" class="nav-link"
+          [ngClass]="{'menu-collapsed': showMenu}" (click)="toggleSubMenu(menuItem?.id)">
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="mr-3">
+              <i-feather class="menu-icon" name="{{menuItem?.icon}}"></i-feather>
+            </span>
+            <span [ngClass]="{'d-none': showMenu}">{{menuItem?.title}}</span>
+            <span class="ml-auto" [ngClass]="{'d-none': showMenu}">
+              <i-feather class="menu-icon" name="{{ showSubmenu[menuItem?.id] ? 'chevron-up' : 'chevron-down' }}">
+              </i-feather>
+            </span>
+          </div>
+        </a>
+      </ng-template>
+
+      <!-- Submenu content -->
+      <div class="submenu" [ngClass]="{'d-none': showMenu, 'collapse': !showSubmenu[menuItem?.id]}">
+        <a href="#" class="nav-link" *ngFor="let subMenuItem of menuItem?.submenu">
+          <span>{{ subMenuItem.title }}</span>
+        </a>
+      </div>
+
+    </li>
+  </ul>
+
+  <ul class="list-unstyled flex-column nav nav-footer">
+    <li class="nav-item">
+      <a [routerLink]="[]" (click)="toggleMenu()" class="nav-link">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="mr-3">
+            <i-feather class="menu-icon" name="{{showMenu ? 'chevron-right': 'chevron-left'}}"></i-feather>
+          </span>
+          <span [ngClass]="{'menu-collapsed': !showMenu, 'd-none': showMenu}">Collapse</span>
+        </div>
+      </a>
+    </li>
+  </ul>
+</aside>

@@ -1,0 +1,73 @@
+<div class="card" style="width: 400px; min-height: 213px;">
+  <div class="card-header pb-0">
+    <h5 class="mb-2">Hello {{ profile?.title ? profile?.title + '.' : '' }}
+      {{ profile.first_name | titlecase }}!</h5>
+    <p *ngIf="!occurrence?.start; else classesToday">
+      You don't have classes today.
+    </p>
+    <ng-template #classesToday>
+      <p *ngIf="!isClassroomActive; else activeClassroom">
+        Your next class starts {{ getFormatDistance(occurrence?.start) }}
+      </p>
+      <ng-template #activeClassroom>
+        <p>
+          Your class started {{ getFormatDistance(occurrence?.start) }}
+        </p>
+      </ng-template>
+    </ng-template>
+  </div>
+  <div *ngIf="occurrence?.start" class="card-body pt-0 position-relative scrollable-y" style="max-height: 325px;">
+    <div>
+      <div class="d-flex">
+        <div class="col-6 d-flex">
+          <div>
+            <div class="mr-4">
+              <i-feather name="book-open"></i-feather>
+            </div>
+          </div>
+          <div>
+            <p class="text-heading mb-0">{{ occurrence?.course?.name }}</p>
+            <p class="text-sm text-muted mb-0">
+              Course
+            </p>
+          </div>
+        </div>
+        <div class="col-6 d-flex">
+          <div>
+            <div class="mr-4">
+              <i-feather name="user"></i-feather>
+            </div>
+          </div>
+          <div>
+            <p class="text-heading mb-0">{{ occurrence?.course?.teacher }}</p>
+            <p class="text-sm text-muted mb-0">
+              Teacher
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex" *ngIf="!isClassroomActive; else joinClassTemplate">
+        <div class="col-6 d-flex">
+          <div>
+            <div class="mr-4">
+              <i-feather name="clock"></i-feather>
+            </div>
+          </div>
+          <div>
+            <p class="text-heading mb-0">{{ getDurationTimeFormat(occurrence?.classroom?.duration) }}</p>
+            <p class="text-sm text-muted mb-0">
+              Duration
+            </p>
+          </div>
+        </div>
+      </div>
+      <ng-template #joinClassTemplate>
+        <a href="{{ meetingRoomLink }}" type="button" class="btn btn-success btn-block center mt-2 mb-0"
+          *ngIf="meetingRoomLink">
+          Join Classroom
+        </a>
+      </ng-template>
+    </div>
+
+  </div>
+</div>

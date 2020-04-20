@@ -1,0 +1,77 @@
+<!-- Main content -->
+<section>
+  <div class="container d-flex flex-column">
+    <div class="row align-items-center justify-content-center min-vh-100">
+      <div class="col-md-8 py-6 py-md-0">
+        <div class="card shadow zindex-100 mb-0" style="min-width: 300px;">
+          <div class="card-body px-md-5 py-5">
+            <div class="text-center" style="margin-bottom: 2rem;">
+              <h6 class="h3 text-primary text-uppercase">Darasa LMS</h6>
+              <p class="text-muted mb-0">Sign in to access your account</p>
+              <div class="underline bg-primary mx-auto mt-3"></div>
+            </div>
+            <span class="clearfix"></span>
+            <div *ngFor="let alert of alerts">
+              <ngb-alert [type]="alert.type" *ngIf="!alert.closed" (close)="closeAlert(alert)">{{ alert.message }}
+              </ngb-alert>
+            </div>
+            <form #f="ngForm" novalidate (ngSubmit)="f.form.valid && onSubmit()">
+              <div class="row justify-content-center">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <div class="position-relative" [ngClass]="{
+                    'has-error': (f.submitted || email.dirty || email.touched) && !email.valid
+                    }">
+                      <div class="position-relative">
+                        <i-feather name="mail" class="left-icon position-absolute"></i-feather>
+                        <input type="email" name="email" #email="ngModel" class="form-control bg-white pl-5 rounded-0"
+                          placeholder="Email" [(ngModel)]="form.email" email required
+                          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" />
+                      </div>
+                      <small *ngIf="(f.submitted || email.dirty || email.touched) && !email.valid"
+                        class="err-msg form-text text-danger position-absolute">Email is required</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mt-0 mt-3 mt-lg-0">
+
+                  <div class="form-group">
+                    <div class="position-relative" [ngClass]="{
+                  'has-error': (f.submitted || password.dirty || password.touched) && !password.valid
+                  }">
+                      <div class="position-relative">
+                        <i-feather name="lock" class="left-icon position-absolute"></i-feather>
+                        <input [type]="showPassword ? 'text' : 'password'" name="password" #password="ngModel"
+                          class="form-control bg-white px-5 rounded-0" placeholder="Password"
+                          [(ngModel)]="form.password" required />
+                        <i-feather [name]="showPassword ? 'eye' : 'eye-off'" class="right-icon position-absolute"
+                          (click)="toggleShowPassword()"></i-feather>
+                      </div>
+                      <small *ngIf="(f.submitted || password.dirty || password.touched) && !password.valid"
+                        class="err-msg form-text text-danger position-absolute">Password is required</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-4 d-flex align-items-center">
+                <div class="col-md-6 col-xs-12">
+                  Don't have an account?
+                  <a [routerLink]="['/signup']" class="font-weight-bold"> Sign Up</a>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                  <button type="submit" [disabled]="loading" class="btn btn-primary float-right">
+                    <i *ngIf="loading" class="fas fa-circle-notch fa-spin fa-fw"></i>
+                    Sign in
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="text-right py-3">
+          <a [routerLink]="['/forgot-password']" class="">Forgot Password?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

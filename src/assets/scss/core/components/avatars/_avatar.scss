@@ -1,0 +1,126 @@
+//
+// Avatar
+//
+
+.avatar {
+  position: relative;
+  color: $avatar-color;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  font-size: $avatar-font-size;
+  font-weight: $avatar-font-weight;
+  height: $avatar-width;
+  width: $avatar-width;
+  @include border-radius($avatar-border-radius);
+
+  img {
+    width: 100%;
+    @include border-radius($avatar-border-radius);
+  }
+
+  &.rounded-circle {
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  span {
+    background-color: $avatar-bg;
+  }
+
+  + .avatar {
+    margin-left: 0.25rem;
+  }
+
+  + .avatar-content {
+    display: inline-block;
+    margin-left: 0.75rem;
+  }
+}
+
+// Sizes
+
+.avatar-2xl {
+  width: $avatar-width-2xl;
+  height: $avatar-width-2xl;
+  font-size: $avatar-font-size-2xl;
+}
+
+.avatar-xl {
+  width: $avatar-width-xl;
+  height: $avatar-width-xl;
+  font-size: $avatar-font-size-xl;
+}
+
+.avatar-lg {
+  width: $avatar-width-lg;
+  height: $avatar-width-lg;
+  font-size: $avatar-font-size-lg;
+}
+
+.avatar-sm {
+  width: $avatar-width-sm;
+  height: $avatar-width-sm;
+  font-size: $avatar-font-size-sm;
+  @include border-radius($avatar-border-radius-sm);
+}
+
+.avatar-xs {
+  width: $avatar-width-xs;
+  height: $avatar-width-xs;
+  font-size: $avatar-font-size-xs;
+  @include border-radius($avatar-border-radius-xs);
+}
+
+.avatar-group {
+  display: inline-block;
+  line-height: 1;
+}
+
+.avatar-group .avatar {
+  z-index: 1;
+  transition: margin 0.15s ease-in-out;
+  border: 1px solid $white;
+  box-sizing: border-box;
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.15));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-group .avatar {
+    transition: none;
+  }
+}
+
+.avatar-group .avatar img {
+  border: 2px solid $white;
+}
+
+.avatar-group .avatar:hover {
+  z-index: 2;
+}
+
+.avatar-group .avatar + .avatar {
+  margin-left: -1.25rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.avatar-group .avatar-sm + .avatar-sm {
+  margin-left: -1rem;
+}
+
+.avatar-group .avatar-xs + .avatar-xs {
+  margin-left: -0.25rem;
+}
+
+.avatar-group:hover .avatar {
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+}
+
+.avatar-group:hover .avatar-sm {
+  border-top-left-radius: 0.2rem;
+  border-bottom-left-radius: 0.2rem;
+}

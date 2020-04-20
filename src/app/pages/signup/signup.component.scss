@@ -1,0 +1,53 @@
+
+.underline {
+  height: 2px;
+  width: 50px;
+}
+
+.left-icon {
+  display: flex;
+  height: 1rem;
+  width: 1rem;
+  left: 17px;
+  top: calc(50% - 6px);
+}
+
+.right-icon {
+  display: flex;
+  height: 1rem;
+  width: 1rem;
+  right: 17px;
+  top: calc(50% - 6px);
+  cursor: pointer;
+}
+
+.form-control {
+  border-radius: 3px !important;
+}
+
+.is-invalid + .right-icon {
+    right: 40px;
+}
+
+.err-msg {
+  bottom: -25px
+}
+
+.nav-link {
+    border-color: #008aff;
+    color: #007ce6;
+    padding: 8px 16px
+}
+
+.signin {
+  display: block;
+  bottom: -30px;
+}
+
+.custom-input-file + label {
+  border-radius: 0.9375rem;
+  span {
+    vertical-align: middle;
+  }
+}
+

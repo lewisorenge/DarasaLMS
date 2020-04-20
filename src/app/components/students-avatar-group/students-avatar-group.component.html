@@ -1,0 +1,9 @@
+<div class="avatar-group" *ngIf="students?.length > 0">
+  <img alt="" src="{{ student?.user?.picture || student?.picture_url }}" class="avatar avatar-xs rounded-circle"
+    *ngFor="let student of students.slice(0,3)"
+    ngbPopover="{{ student?.user?.first_name || student?.user }} {{ student?.user?.last_name }}"
+    triggers="mouseenter:mouseleave" />
+  <span class="avatar avatar-xs bg-primary text-white rounded-circle" *ngIf="students?.length - 3 > 1">
+    {{ students?.length - 3 }}
+  </span>
+</div>

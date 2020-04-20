@@ -1,0 +1,65 @@
+// User styles
+//
+// This is the place where you should place all additional styles and imports.
+// This will allow you to take advantage of future updates with lower time consumed on the upgrade process.
+
+div.preloader {
+  position: fixed;
+  background: $white;
+  width: 100%;
+  height: 100%;
+  z-index: 1071;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  overflow: hidden;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+}
+
+.wrapper {
+  width: 100%;
+  background-color: $white;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.sidebar {
+  background-color: $gray-100;
+}
+
+.main-content {
+  padding: 1.5rem 1.25rem;
+}
+
+.text-heading {
+  color: $headings-color;
+}
+
+// NgSelect
+
+.ng-select .ng-select-container {
+  border-radius: 0.9375rem;
+  padding: 0.2rem 0.5rem 0.2rem 0.8125rem;
+  height: 50px;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+  top: unset;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+  height: 50px;
+}
+
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+  top: unset;
+  padding: 0.2rem 0.5rem 0.2rem 1.25rem;
+}
+
+.ng-select.is-invalid .ng-select-container {
+  border-color: $red;
+}

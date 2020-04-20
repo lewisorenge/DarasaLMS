@@ -1,0 +1,48 @@
+<section class="main-content">
+  <ng-container *ngIf="profile?.role === 'teacher'; else showStudentCourses">
+    <div class="row">
+      <div class="col-6">
+        <h4>My Courses</h4>
+      </div>
+      <div class="col-6">
+        <a [routerLink]="['/courses/add']" class="btn btn-primary float-right">
+          Add New Course
+        </a>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <p class="col-12" *ngIf="enrolledCourses?.length <= 0; else showEnrolledCourses">
+        Not created a course yet
+      </p>
+      <ng-template #showEnrolledCourses>
+        <div style="margin: 0 10px;" *ngFor="let course of enrolledCourses">
+          <app-course-card [course]="course"></app-course-card>
+        </div>
+      </ng-template>
+    </div>
+  </ng-container>
+  <ng-template #showStudentCourses>
+    <h4>Enrolled Courses</h4>
+    <div class="row mt-3">
+      <p class="col-12" *ngIf="enrolledCourses?.length <= 0 && !loadingUserCourses; else showEnrolledCourses">
+        You are not enrolled to any course. See recommended section.
+      </p>
+      <ng-template #showEnrolledCourses>
+        <div style="margin: 0 10px;" *ngFor="let course of enrolledCourses">
+          <app-course-card [course]="course"></app-course-card>
+        </div>
+      </ng-template>
+    </div>
+    <h4 class="mt-3">Recommended Courses</h4>
+    <div class="row mt-3">
+      <p class="col-12" *ngIf="recommendedCourses?.length <= 0 && !loadingCourses; else showProposedCourses">
+        There are no matching courses.
+      </p>
+      <ng-template #showProposedCourses>
+        <div style="margin: 0 10px;" *ngFor="let course of recommendedCourses">
+          <app-course-card [course]="course"></app-course-card>
+        </div>
+      </ng-template>
+    </div>
+  </ng-template>
+</section>

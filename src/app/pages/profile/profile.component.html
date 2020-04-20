@@ -1,0 +1,41 @@
+<div class="container-fluid pt-4">
+  <div class="user py-4 d-flex align-items-center">
+    <img [src]="user.picture" alt="user image" class="user__image rounded-circle mr-3" height="60" width="60">
+    <div>
+      <h2 class="user__name h6 text-dark mb-0">{{ user.first_name }} {{ user.last_name}}</h2>
+      <p class="user__class small text-primary mb-0">
+        {{ user.role === 'student' ? user.student.educational_stage.name :''}}
+      </p>
+    </div>
+  </div>
+  <div class="teacher mt-4">
+    <h3 class="h5 text-dark mb-4">Your Teachers</h3>
+    <ul class="list-unstyled pl-0 d-flex">
+      <li class="mr-5 text-center teacher" *ngFor="let course of courses">
+        <img [src]="course.teacher.user.picture" alt="Teacher's image" class="rounded-circle">
+        <h4 class="h6 font-weight-light mt-1 text-center">
+          {{ course.teacher.user.first_name }} {{ course.teacher.user.last_name }}
+        </h4>
+      </li>
+    </ul>
+  </div>
+  <div class="teacher mt-5 ">
+    <h3 class="h5 text-dark mb-4">My Courses</h3>
+    <div class="row mb-5">
+      <div class="col-6">
+        <div class="courses card bg-white m-0 py-4 px-0">
+          <h3 class="h6 px-4 m-0">My Courses</h3>
+          <hr class="my-3">
+          <ul class="list-unstyled px-4 pb-0 m-0 pt-0">
+            <li *ngFor="let course of courses">
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="text-dark m-0 tex-capitalize">{{ course.name }}</p>
+              </div>
+              <hr class="my-3">
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

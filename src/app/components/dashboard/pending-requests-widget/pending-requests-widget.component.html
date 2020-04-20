@@ -1,0 +1,41 @@
+<div class="row mt-2" *ngIf="profile?.role === 'teacher'">
+  <h5 class="col-12">Pending Requests</h5>
+  <div class="col-12">
+    <p *ngIf="requests.length <= 0; else showRequests">No pending requests</p>
+    <ng-template #showRequests>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Applied Course</th>
+            <th>Date Applied</th>
+            <th style="padding-left: 2.2rem;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let request of requests" [ngClass]="{
+            'animate__animated animate__fadeOut animate__slow': request?.removed,
+            'bg-success': request?.removed && request?.action === 'accepted',
+            'bg-danger': request?.removed && request?.action === 'declined'
+            }">
+            <th>{{ request.student?.user?.first_name }} {{ request.student?.user?.last_name }}</th>
+            <td>{{ request?.course?.name }}</td>
+            <td>{{ request?.date_created | date:'medium' }}</td>
+            <td>
+              <div *ngIf="request?.status === 'pending'">
+                <button type="button" class="btn btn-sm btn-soft-success"
+                  (click)="processRequest(request?.id, 'accepted')">Accept</button>
+                <span class="mr-2 ml-2 align-middle">|</span>
+                <button type="button" class="btn btn-sm btn-soft-danger"
+                  (click)="processRequest(request?.id, 'declined')">Decline</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-template>
+  </div>
+  <div class="col-lg-12 col-sm-12 px-12 text-right" *ngIf="requests.length > 5">
+    <a [routerLink]="['/students']" class="text-primary">See more</a>
+  </div>
+</div>
